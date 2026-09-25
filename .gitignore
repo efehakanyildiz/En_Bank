@@ -1,0 +1,27 @@
+# macOS sistem dosyaları
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Python & sanal ortamlar
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+.venv/
+
+# IDE & Editör ayarları
+.vscode/
+.idea/
+*.swp
+*~
+
+# Geçici veri ve önbellekler
+*.parquet
+*.delta
+tmp/
+scratch/
