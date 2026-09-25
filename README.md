@@ -155,6 +155,23 @@ Her bir müşteri şirketi için özel olarak hazırlanmış; güncel kapanış 
 
 ---
 
+## 💻 Fabric SQL Analytics — 10 Temel İş Analitiği Sorgusu
+
+Power BI raporlamasından bağımsız olarak, veri analistleri ve portföy yöneticilerinin Fabric **SQL Analytics Endpoint** üzerinde doğrudan çalıştırabileceği 10 temel iş sorgusu [`sql/sql_analysis.sql`](sql/sql_analysis.sql) dosyasında hazırlanmıştır:
+
+1. **Enflasyonu Yenen Şampiyon Şirketler:** 15 şirket arasında enflasyonu en çok aşan ilk 5 şirket hangisi.
+2. **5 Özel Müşteri Şirketimizin Güncel Durum Karnesi:** Danışmanlık müşterisi olan 5 şirketin son fiyat ve teknik sinyalleri nedir.
+3. **Kelepir ve Potansiyel Alım Fırsatı Veren Hisseler:** RSI göstergesi 35 altında olan aşırı satılmış hisseler hangileri.
+4. **Şirketlerin Risk Kademelerine Göre Dağılımı:** Hisselerden hangileri defansif sakin, hangileri agresif oynak.
+5. **Sektör Bazında Ortalama Getiri ve Hacim Liderliği:** BIST'te hangi sektörler daha karlı ve piyasa likiditesinin ne kadarına sahip.
+6. **TCMB Politika Faizi vs Enflasyon Makası:** Merkez Bankası faizi ile yıllık enflasyon arasındaki reel fark son aylarda ne oldu.
+7. **Risksiz Faiz Üstü Ekstra Kazanç Sağlayanlar:** TCMB politika faizini geçip yatırımcısına ekstra prim kazandıran şirketler kimler.
+8. **Piyasa Likidite Şampiyonları:** Günlük işlem hacmi en yüksek ilk 5 hisse senedi hangisi.
+9. **Çift Hareketli Ortalamanın Üzerindeki Güçlü Boğa Hisseleri:** Hem 50 günlük hem 200 günlük ortalamasının üstündeki hisseler hangileri.
+10. **Dolar Kuru Artışını Aşan Şirketler (Döviz Bazında Koruma):** 1 yılda Dolar kuru yaklaşık %35 arttı; dolardan daha çok kazandıran şirketler hangileri.
+
+---
+
 ## 📁 Depo Dizin Yapısı (Repository Structure)
 
 ```text
@@ -183,7 +200,7 @@ Her bir müşteri şirketi için özel olarak hazırlanmış; güncel kapanış 
 │   └── 04_maintenance_optimize.py  # Delta Lake Z-ORDER Compaction ve bakım adımı
 ├── sql/
 │   ├── analytical_views.sql        # Fabric SQL Endpoint analitik görünümleri (5 T-SQL View)
-│   └── ad_hoc_analysis.sql         # Test ve doğrulama SQL sorguları
+│   └── sql_analysis.sql            # 10 Temel iş analitiği ve karar destek sorgusu
 ├── .gitignore                      # Sistem, Python ve önbellek filtreleri
 └── README.md                       # Proje dokümantasyonu
 ```
