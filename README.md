@@ -91,27 +91,54 @@ Platform, her işlem günü seans kapanışından sonra (TSİ **18:30**) otomati
 
 ---
 
-## 📊 Power BI Yönetici Kokpiti (DirectLake)
+## 📊 Power BI Yönetici & Analitik Raporlama Paketi (DirectLake)
 
-Raporlama katmanı, **DirectLake** teknolojisi sayesinde veriyi içe aktarmadan (Import) doğrudan OneLake üzerindeki Delta tablolarından sorgular.
+Tüm raporlar OneLake üzerindeki Gold Delta tablolarına **DirectLake** moduyla bağlıdır. Veri modeli belleğe kopyalanmaz, sıfır gecikmeyle canlı çalışır. Paneller mantıksal bir yatırım bankacılığı akışıyla (Makro $\rightarrow$ Portföy $\rightarrow$ Şirket Röntgeni) 3 ana bölüme ayrılmıştır:
 
-### 1. Müşteri Şirketleri Karşılaştırma Sayfası
-Danışmanlık müşterisi olan 5 şirketin likidite payı, enflasyon üstü reel kârı, teknik trend sağlığı ve risk profili tek bir ekranda özetlenir:
-* **Halka Grafiği (Donut Chart):** Şirketlerin piyasadaki günlük işlem hacmi ve likidite payı dağılımı.
-* **Kümelenmiş Sütun Grafik:** 1 Yıllık Nominal Getiri vs. Enflasyondan Arındırılmış Net Reel Kazanç.
-* **Pasta Grafiği (Pie Chart):** Portföyün teknik sinyal sağlığı (Yükseliş, Nötr, Aşırı Satım).
-* **Yatay Çubuk Grafik:** Şirketlerin yıllık dalgalanma ve risk (volatilite) seviyeleri.
+---
 
-![Power BI Müşteri Karşılaştırma](docs/images/powerbi_musteri_karsilastirma.png)
+### Bölüm I: Makro Piyasa, Risk & Sektörel Görünüm (Top-Down Analiz)
 
-### 2. Şirket Derinlemesine Röntgen Sayfası (Örn: Mavi Giyim)
-Her müşteri şirketi için özel olarak hazırlanmış dinamik analiz sayfası:
-* **Güncel KPI Kartları:** Son İşlem Kapanış Fiyatı, Fisher Reel Getirisi, Trend Durumu.
-* **Fiyat & 50/200 Günlük Hareketli Ortalamalar (SMA):** Golden Cross / Death Cross kesişimleri.
-* **Fiyat ve İşlem Hacmi Birleşik Grafiği:** Fiyat hareketlerine eşlik eden piyasa likiditesi.
-* **RSI Momentum Osilatörü:** 14 günlük aşırı alım / satım bantları.
+#### 1. BIST Reel Getiri & Sektörel Piyasa Isı Haritası (Finviz / Bloomberg Stili)
+Tüm 15 şirketin Fisher denklemi bazlı reel getiri karnesi, güncel teknik sinyalleri ve sağ altta sektör ağırlıklarına göre kümelenmiş devasa BIST Piyasa Isı Haritası (Treemap):
+![01 - Makro Piyasa ve Sektörel Isı Haritası](docs/images/01_makro_piyasa_ve_sektorel_isi_haritasi.png)
 
-![Power BI Şirket Derinlemesine Analiz](docs/images/powerbi_sirket_derinlemesine.png)
+#### 2. Bankacılık Faiz Riski (IRRBB), Likidite & Makro Trendler
+TCMB Politika Faizi ve döviz kurları (USD/TRY, EUR/TRY) yükselirken şirketlerin faiz duyarlılık betaları, likidite profilleri ve Risk vs. Getiri Dağılım Baloncuk Grafiği (Scatter Plot):
+![02 - Bankacılık Risk, Faiz Duyarlılığı ve Makro Trend](docs/images/02_bankacilik_risk_faiz_duyarliligi_ve_makro_trend.png)
+
+#### 3. 15 Hissenin Kümülatif Getiri Şampiyonları (2022 – 2026 Trendi)
+Son 5 yıllık dönemde hisselerin kümülatif getiri ayrışması ve sağdaki dinamik şirket seçici (Slicer):
+![03 - Kümülatif Getiri Performans Trendi](docs/images/03_kumulatif_getiri_performans_trendi.png)
+
+---
+
+### Bölüm II: Danışmanlık Portföyü — Müşteri Şirketleri Kıyaslama Kokpiti
+
+#### 4. Kilit 5 Müşteri Şirketi — 6'lı Karşılaştırmalı Performans Kokpiti
+Firmanın çalıştığı 5 özel şirketin (*Coca-Cola İçecek, Mavi Giyim, Eczacıbaşı İlaç, Aksigorta, Gedik Yatırım*) likidite payı (Halka), enflasyona göre net kârı (Sütun), faiz üstü ekstra getirisi (Çubuk), piyasa trendi (Pasta), volatilite riski (Çubuk) ve RSI güç sıralaması (Huni):
+![04 - Müşteri Şirketleri Karşılaştırma Kokpiti](docs/images/04_musteri_sirketleri_karsilastirma_kokpiti.png)
+
+---
+
+### Bölüm III: Müşteri Şirketleri Derinlemesine Röntgen (Company Deep-Dives)
+
+Her bir müşteri şirketi için özel olarak hazırlanmış; güncel kapanış fiyatı, Fisher reel getirisi, trend durumu, 50/200 günlük hareketli ortalamalar (SMA), fiyat & işlem hacmi trendi ve 14 günlük RSI osilatörünü içeren derinlemesine analiz sayfaları:
+
+#### 5. Coca-Cola İçecek (`CCOLA.IS` | Hızlı Tüketim & İçecek)
+![05 - Şirket Detay Coca-Cola İçecek](docs/images/05_sirket_detay_coca_cola.png)
+
+#### 6. Mavi Giyim (`MAVI.IS` | Perakende & Tekstil)
+![06 - Şirket Detay Mavi Giyim](docs/images/06_sirket_detay_mavi_giyim.png)
+
+#### 7. Eczacıbaşı İlaç (`ECILC.IS` | Sağlık & İlaç)
+![07 - Şirket Detay Eczacıbaşı İlaç](docs/images/07_sirket_detay_eczacibasi_ilac.png)
+
+#### 8. Aksigorta (`AKGRT.IS` | Finans & Sigortacılık)
+![08 - Şirket Detay Aksigorta](docs/images/08_sirket_detay_aksigorta.png)
+
+#### 9. Gedik Yatırım (`GEDIK.IS` | Finansal Hizmetler & Aracı Kurum)
+![09 - Şirket Detay Gedik Yatırım](docs/images/09_sirket_detay_gedik_yatirim.png)
 
 ---
 
@@ -135,8 +162,18 @@ Her müşteri şirketi için özel olarak hazırlanmış dinamik analiz sayfası
 │   └── settings.py                 # 15 hisse senedi ve TCMB EVDS serileri yapılandırması
 ├── docs/
 │   ├── architecture.md             # Detaylı sistem mimari dokümanı
-│   └── images/                     # Pipeline ve Power BI ekran görüntüleri
-├── notebooks/                      # Microsoft Fabric PySpark kodları
+│   └── images/                     # Pipeline ve sıralı Power BI ekran görüntüleri
+│       ├── fabric_data_factory_pipeline.png
+│       ├── 01_makro_piyasa_ve_sektorel_isi_haritasi.png
+│       ├── 02_bankacilik_risk_faiz_duyarliligi_ve_makro_trend.png
+│       ├── 03_kumulatif_getiri_performans_trendi.png
+│       ├── 04_musteri_sirketleri_karsilastirma_kokpiti.png
+│       ├── 05_sirket_detay_coca_cola.png
+│       ├── 06_sirket_detay_mavi_giyim.png
+│       ├── 07_sirket_detay_eczacibasi_ilac.png
+│       ├── 08_sirket_detay_aksigorta.png
+│       └── 09_sirket_detay_gedik_yatirim.png
+├── notebooks/                      # Microsoft Fabric PySpark kodları (Aktif 7 Notebook)
 │   ├── 00_market_calendar_check.py # FinOps borsa tatil ve takvim denetimi
 │   ├── 01a_ingest_yfinance.py      # BIST 15 hissesi artımlı veri çekimi (MERGE INTO)
 │   ├── 01b_ingest_tcmb.py          # TCMB EVDS faiz, kur, enflasyon serileri çekimi
