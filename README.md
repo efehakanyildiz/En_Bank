@@ -150,24 +150,24 @@ Projede hem Power BI panellerinde hem de SQL sorgularında kullanılan temel fin
 
 | Metrik | Formül / Hesaplama Mantığı | Finansal & İş Anlamı |
 |---|---|---|
-| **Fisher Reel Getiri** | $r_{\text{reel}} = \frac{1 + r_{\text{nominal}}}{1 + i_{\text{TÜFE}}} - 1$ | Enflasyondan arındırılmış net satın alma gücü getirisi. Nominal getiri yüksek olsa bile paranın gerçekte ne kadar değer kazandığını ölçer. |
-| **Trailing 1-Year Return** | $\frac{\text{Close}_t - \text{Close}_{t-252}}{\text{Close}_{t-252}} \times 100$ | BIST takvimindeki son 252 aktif işlem gününü baz alan yıllıklandırılmış nominal hisse performansı. |
-| **Yıllıklandırılmış Volatilite** | $\sigma_{\text{yıllık}} = \sigma_{\text{günlük}} \times \sqrt{252} \times 100$ | Günlük getirilerin standart sapmasının yıllık işlem günü kareköküyle çarpılmasıyla hesaplanan risk ve dalgalanma ölçüsü. |
-| **Sharpe Rasyosu** | $\frac{r_{\text{yıllık}} - R_f}{\sigma_{\text{yıllık}}}$ ($R_f$: TCMB %40 Politika Faizi) | Üstlenilen her 1 birimlik risk başına risksiz faizin üzerinde ne kadar ekstra getiri elde edildiğini ölçen portföy verimlilik katsayısı. |
-| **Faiz Üstü Fazla Getiri (Alpha)** | $r_{\text{fazla}} = r_{\text{nominal}} - \text{TCMB Politika Faizi}$ | Hissenin yıllık getirisinin risksiz para piyasası faizini (%40) ne kadar aştığını gösteren net prim marjı. |
-| **TÜFE Yıllık Enflasyon** | $\text{Lag}(\text{TÜFE\_Endeks}, 12)$ bazlı gerçek YoY değişim | TCMB resmi TÜFE endeksinin tam 12 ay önceki değerine kıyasla yıllık artış oranı. |
-| **Faiz Duyarlılık Betası (IRRBB)** | $\beta_{\text{faiz}} = \frac{\text{Cov}(R_i, \Delta \text{Faiz})}{\text{Var}(\Delta \text{Faiz})}$ | TCMB faiz kararlarındaki değişimlerin şirketin piyasa değerine ve hisse fiyatına olan duyarlılık katsayısı. |
+| **Fisher Reel Getiri** | `r_reel = ((1 + r_nominal) / (1 + i_TÜFE)) - 1` | Enflasyondan arındırılmış net satın alma gücü getirisi. Nominal getiri yüksek olsa bile paranın gerçekte ne kadar değer kazandığını ölçer. |
+| **Trailing 1-Year Return** | `((Close_t - Close_t-252) / Close_t-252) * 100` | BIST takvimindeki son 252 aktif işlem gününü baz alan yıllıklandırılmış nominal hisse performansı. |
+| **Yıllıklandırılmış Volatilite** | `σ_yıllık = σ_günlük * √252 * 100` | Günlük getirilerin standart sapmasının yıllık işlem günü kareköküyle (`√252`) çarpılmasıyla hesaplanan risk ve dalgalanma ölçüsü. |
+| **Sharpe Rasyosu** | `(r_yıllık - Rf) / σ_yıllık` *(Rf: TCMB %40 Politika Faizi)* | Üstlenilen her 1 birimlik risk başına risksiz faizin üzerinde ne kadar ekstra getiri elde edildiğini ölçen portföy verimlilik katsayısı. |
+| **Faiz Üstü Fazla Getiri (Alpha)** | `r_fazla = r_nominal - TCMB_Politika_Faizi` | Hissenin yıllık getirisinin risksiz para piyasası faizini (%40) ne kadar aştığını gösteren net prim marjı. |
+| **TÜFE Yıllık Enflasyon** | `Lag(TÜFE_Endeks, 12)` bazlı gerçek YoY değişim | TCMB resmi TÜFE endeksinin tam 12 ay önceki değerine kıyasla yıllık artış oranı. |
+| **Faiz Duyarlılık Betası (IRRBB)** | `β_faiz = Cov(Ri, ΔFaiz) / Var(ΔFaiz)` | TCMB faiz kararlarındaki değişimlerin şirketin piyasa değerine ve hisse fiyatına olan duyarlılık katsayısı. |
 
 ### 2. Teknik Analiz & Karar Destek Göstergeleri
 
 | Gösterge | Formül / Hesaplama Mantığı | Finansal & İş Anlamı |
 |---|---|---|
-| **RSI (Göreceli Güç Endeksi, 14 Gün)** | $\text{RSI} = 100 - \left[ \frac{100}{1 + \frac{\text{Ortalama Kazanç (14G)}}{\text{Ortalama Kayıp (14G)}}} \right]$ | 0–100 arasında salınan momentum hız göstergesi. Son 14 gündeki yükseliş gücünü ölçer.<br>• **$\text{RSI} < 35$:** **AŞIRI SATIM (Oversold)** $\rightarrow$ Fiyat gereğinden fazla düşmüş, toparlanma / alım fırsatı.<br>• **$\text{RSI} > 70$:** **AŞIRI ALIM (Overbought)** $\rightarrow$ Fiyat aşırı şişmiş, kâr satışı / düzeltme riski. |
-| **Hareketli Ortalamalar (SMA 50 & 200)** | $\text{SMA}_n = \frac{1}{n} \sum_{i=0}^{n-1} \text{Close}_{t-i}$ | Hissenin son 50 işlem günü (kısa-orta vade) ve 200 işlem günü (uzun vade) kapanış fiyatlarının ağırlıksız aritmetik ortalaması. Trendin yönünü belirler. |
-| **Golden Cross (Altın Kesişim)** | $\text{SMA}_{50} \text{ yukarı keser } \text{SMA}_{200}$ | Kısa vadeli ortalamanın uzun vadeli ortalamanın üzerine çıkması. Piyasada güçlü bir **orta-uzun vadeli yükseliş (Boğa)** trendinin başladığı sinyalini verir. |
-| **Death Cross (Ölüm Kesişimi)** | $\text{SMA}_{50} \text{ aşağı keser } \text{SMA}_{200}$ | Kısa vadeli ortalamanın uzun vadeli ortalamanın altına inmesi. Piyasada güçlü bir **düşüş (Ayı)** trendine girildiğini işaret eder. |
-| **Bollinger Bantları (20 Gün, $2\sigma$)** | • $\text{Orta Bant} = \text{SMA}_{20}$<br>• $\text{Üst/Alt Bant} = \text{SMA}_{20} \pm (2 \times \sigma_{20})$ | Fiyatların istatistiksel normal dağılım sınırlarını belirler (%95 güven aralığı). Fiyat alt banda değerse dip/destek bölgesi, üst banda değerse tepe/direnç bölgesinde kabul edilir. |
-| **Piyasa Likidite Rasyosu** | $\text{Likidite} = \frac{\text{Günlük Ortalama İşlem Hacmi (TL)}}{\text{Günlük Volatilite (\%)}} \times 10^{-6}$ | Hissenin piyasa fiyatını dalgalandırmadan ne kadar hızlı ve kolay nakde dönebileceğini ölçen kurumsal ALM rasyosu. |
+| **RSI (Göreceli Güç Endeksi, 14 Gün)** | `RSI = 100 - [100 / (1 + RS)]`<br>*(RS = Ort. Kazanç / Ort. Kayıp)* | 0–100 arasında salınan momentum hız göstergesi. Son 14 gündeki yükseliş gücünü ölçer.<br>• **`RSI < 35`:** **AŞIRI SATIM (Oversold)** $\rightarrow$ Fiyat gereğinden fazla düşmüş, toparlanma / alım fırsatı.<br>• **`RSI > 70`:** **AŞIRI ALIM (Overbought)** $\rightarrow$ Fiyat aşırı şişmiş, kâr satışı / düzeltme riski. |
+| **Hareketli Ortalamalar (SMA 50 & 200)** | `SMA_n = (Close_1 + ... + Close_n) / n` | Hissenin son 50 işlem günü (kısa-orta vade) ve 200 işlem günü (uzun vade) kapanış fiyatlarının aritmetik ortalaması. Trendin yönünü belirler. |
+| **Golden Cross (Altın Kesişim)** | `SMA_50 > SMA_200` *(Yukarı Kesişim)* | Kısa vadeli ortalamanın uzun vadeli ortalamanın üzerine çıkması. Piyasada güçlü bir **orta-uzun vadeli yükseliş (Boğa)** trendinin başladığı sinyalini verir. |
+| **Death Cross (Ölüm Kesişimi)** | `SMA_50 < SMA_200` *(Aşağı Kesişim)* | Kısa vadeli ortalamanın uzun vadeli ortalamanın altına inmesi. Piyasada güçlü bir **düşüş (Ayı)** trendine girildiğini işaret eder. |
+| **Bollinger Bantları (20 Gün, 2σ)** | • `Orta Bant = SMA_20`<br>• `Üst/Alt Bant = SMA_20 ± (2 * σ_20)` | Fiyatların istatistiksel normal dağılım sınırlarını belirler (%95 güven aralığı). Fiyat alt banda değerse dip/destek bölgesi, üst banda değerse tepe/direnç bölgesinde kabul edilir. |
+| **Piyasa Likidite Rasyosu** | `Likidite = (Ortalama_Hacim_TL / Volatilite_%) * 10^-6` | Hissenin piyasa fiyatını dalgalandırmadan ne kadar hızlı ve kolay nakde dönebileceğini ölçen kurumsal ALM rasyosu. |
 
 ---
 
