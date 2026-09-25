@@ -8,13 +8,17 @@
 
 ---
 
-## 📌 Proje Özeti & İş Problemi (Executive Summary)
+## 📌 Proje Özeti
 
-Yüksek enflasyon ve dinamik para politikası ortamlarında, hisse senetlerinin **nominal getirileri** yatırımcıları ve şirket yönetimlerini yanıltabilmektedir. Yıllık %60 kazandıran bir şirket, enflasyonun %65 olduğu bir ortamda gerçekte sermaye eritmektedir.
+Bu proje, Borsa İstanbul hisse verileri ile TCMB makroekonomik göstergelerini tek bir analitik veri platformunda birleştiren, Microsoft Fabric üzerinde geliştirilmiş uçtan uca bir **Financial Data Engineering & Analytics** çözümüdür.
 
-Bu kurumsal platform; **Borsa İstanbul (BIST)** ve **Türkiye Cumhuriyet Merkez Bankası (TCMB EVDS)** verilerini otomatik olarak toplayan, **Medallion mimarisi (Bronze $\rightarrow$ Silver $\rightarrow$ Gold)** ile işleyen ve **Fisher Denklemi** ile hisselerin gerçek satın alma gücü getirilerini (**Reel Getiri**) hesaplayan uçtan uca modern bir veri mühendisliği platformudur.
+Platform; BIST’te işlem gören 15 şirketin piyasa verilerini yfinance üzerinden, döviz kuru, faiz ve enflasyon verilerini ise TCMB EVDS üzerinden otomatik olarak toplar. Veriler **Bronze → Silver → Gold Medallion Architecture** yaklaşımıyla PySpark ve Delta Lake kullanılarak işlenir; artımlı veri yükleme, veri kalite kontrolleri, deduplication ve tablo optimizasyonları pipeline içerisinde otomatik olarak gerçekleştirilir.
 
-Platform özellikle danışmanlık ve portföy şirketinin çalıştığı **5 kilit müşteri şirketinin** (*Coca-Cola İçecek, Mavi Giyim, Aksigorta, Gedik Yatırım, Eczacıbaşı İlaç*) yanı sıra BIST lokomotifi toplam **15 şirketin** teknik ve makro risk profilini gerçek zamanlı takip eder.
+Gold katmanında SMA, RSI ve Bollinger Bantları gibi teknik göstergelerin yanı sıra reel getiri, volatilite, Sharpe oranı, faiz duyarlılığı ve piyasa likiditesi gibi finansal metrikler hesaplanır. Hazırlanan analitik veri setleri Fabric SQL Analytics Endpoint üzerinden T-SQL görünümleri ile sunulur ve Power BI DirectLake raporları aracılığıyla makro piyasa görünümü, şirket karşılaştırmaları ve detaylı performans analizleri için kullanılır.
+
+Proje kapsamında özellikle hedef şirketler olarak belirlenen **Coca-Cola İçecek A.Ş. (CCOLA), Aksigorta A.Ş. (AKGRT), Gedik Yatırım Menkul Değerler A.Ş. (GEDIK), Mavi Giyim Sanayi ve Ticaret A.Ş. (MAVI)** ve **EİS Eczacıbaşı İlaç Sınai ve Finansal Yatırımlar Sanayi ve Ticaret A.Ş. (ECILC)** üzerine ayrıca odaklanılmıştır. Bu şirketler için genel piyasa karşılaştırmalarının yanı sıra kapanış fiyatı, reel getiri, volatilite, teknik trendler, işlem hacmi ve momentum göstergelerini içeren **şirket bazlı detaylı analiz raporları** oluşturulmuştur.
+
+Projenin amacı yalnızca bir finans dashboard’u oluşturmak değil; **veri kaynağından karar destek katmanına kadar otomatik, ölçeklenebilir ve sürdürülebilir bir finansal veri pipeline’ı tasarlamaktır.**
 
 ---
 
