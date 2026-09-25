@@ -179,6 +179,7 @@ Power BI raporlamasından bağımsız olarak, veri analistleri ve portföy yöne
 │   └── settings.py                 # 15 hisse senedi ve TCMB EVDS serileri yapılandırması
 ├── docs/
 │   ├── architecture.md             # Detaylı sistem mimari dokümanı
+│   ├── limitations_and_future_improvements.md # Mevcut kısıtlar ve geliştirme alanları
 │   └── images/                     # Pipeline ve sıralı Power BI ekran görüntüleri
 │       ├── fabric_data_factory_pipeline.png
 │       ├── 01_makro_piyasa_ve_sektorel_isi_haritasi.png
@@ -228,6 +229,17 @@ Power BI raporlamasından bağımsız olarak, veri analistleri ve portföy yöne
 * **Artımlı Yükleme (Incremental MERGE INTO):** Geçmiş 5 yıllık veri her gün tekrar indirilmez; sadece yeni işlem gününün verisi `MERGE INTO` ile eklenir. Bu sayede pipeline süresi 15 dakikadan **1-2 dakikaya** iner.
 * **FinOps Hafta Sonu Koruması:** Hafta sonları ve resmi tatillerde borsa kapalıyken sunucu kaynakları (Compute Units) çalıştırılmaz; bulut maliyeti optimize edilir.
 * **Self-Healing Delta Bakımı:** `OPTIMIZE ... ZORDER BY (ticker, date)` komutuyla DirectLake sorgu hızları sürekli maksimumda tutulur.
+
+---
+
+## 🔍 Mevcut Kısıtlar ve Geliştirilebilecek Noktalar
+
+Projenin mevcut sürümündeki mimari kısıtlar ve gelecek sürümler (V2) için yol haritası *(Detaylar için: [`docs/limitations_and_future_improvements.md`](docs/limitations_and_future_improvements.md))*:
+
+1. **Merkezi Şirket Boyut Tablosunun (Star Schema) Eksikliği:** SQL View'lar ve Delta tabloları bağımsız olduğundan, Power BI rapor sayfalarında tekil filtreleme için görseller bazında filtre yönetimi gerekebilmektedir; merkezi bir `dim_sirket` ile Yıldız Şema kurgulanması hedeflenmektedir.
+2. **Dinamik Tarih Boyutu ve İş Günü Takvimi:** Doğrudan ham `date` sütununa bağımlı olmak yerine BIST seans takvimi ve mali çeyrekleri içeren zengin bir `dim_tarih` tablosu entegrasyonu planlanmaktadır.
+3. **Gün İçi Canlı Veri Akışının (Streaming) Bulunmaması:** Sistem seans sonu (Batch - Günlük 18:30) çalıştığından, Fabric Eventstream & KQL Database ile seans içi anlık veri akışı sağlanabilir.
+4. **Satır Düzeyinde Güvenlik (Row-Level Security - RLS):** Danışmanlık ve analist ekiplerinin sadece kendi sorumlu oldukları müşteri şirketlerini görmesi için RLS yetkilendirmesi eklenecektir.
 
 ---
 
